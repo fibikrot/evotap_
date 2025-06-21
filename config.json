@@ -1,0 +1,66 @@
+{
+  "name": "EvoTap",
+  "version": "1.0.0",
+  "description": "Эволюционный кликер с NFT и Web3",
+  "port": 3002,
+  "database": {
+    "path": "./data/evotap.db"
+  },
+  "web3": {
+    "enabled": true,
+    "network": "polygon-mumbai",
+    "tokenContract": "0x...",
+    "nftContract": "0x..."
+  },
+  "game": {
+    "startingDNA": 0,
+    "startingEra": 1,
+    "baseClickReward": 1,
+    "mutationBaseCost": 1000,
+    "breedingCost": 5000,
+    "exchangeRate": 100,
+    "maxLevel": 100,
+    "autoSaveInterval": 30000
+  },
+  "achievements": {
+    "enabled": true,
+    "nftRewards": true
+  },
+  "leaderboard": {
+    "enabled": true,
+    "updateInterval": 60000
+  },
+  "notifications": {
+    "telegram": {
+      "enabled": false,
+      "botToken": "",
+      "chatId": ""
+    }
+  },
+  "anti-inflation": {
+    "enabled": true,
+    "dailyRewardCap": 100000,
+    "clickRateLimit": 10,
+    "progressiveScaling": true,
+    "burnMechanism": {
+      "enabled": true,
+      "burnRate": 0.01,
+      "burnThreshold": 1000000
+    }
+  },
+  "viral": {
+    "referralSystem": {
+      "enabled": true,
+      "bonus": 0.1,
+      "maxReferrals": 100
+    },
+    "socialSharing": {
+      "enabled": true,
+      "rewards": {
+        "telegram": 100,
+        "twitter": 200,
+        "discord": 150
+      }
+    }
+  }
+} 

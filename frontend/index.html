@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 EvoTap - Эволюционный Кликер</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Заголовок игры -->
+        <header class="game-header">
+            <div class="logo">
+                <h1>🧬 EvoTap</h1>
+                <span class="subtitle">Эволюционный Кликер</span>
+            </div>
+            <div class="player-stats">
+                <div class="stat-item">
+                    <span class="stat-label">ДНК:</span>
+                    <span id="dna-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Уровень:</span>
+                    <span id="player-level" class="stat-value">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">$DNA:</span>
+                    <span id="token-balance" class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основная игровая область -->
+        <main class="game-main">
+            <!-- Текущая эра -->
+            <section class="era-section">
+                <div class="era-display">
+                    <div id="era-emoji" class="era-emoji">🦠</div>
+                    <div class="era-info">
+                        <h2 id="era-name">Клеточная эра</h2>
+                        <p id="era-description">Простейшие организмы в первичном бульоне</p>
+                        <div class="era-multiplier">
+                            Множитель: <span id="era-multiplier">x1</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Кликабельная область эволюции -->
+            <section class="evolution-area">
+                <div id="click-zone" class="click-zone">
+                    <div id="organism" class="organism">
+                        <div class="organism-core"></div>
+                        <div class="organism-aura"></div>
+                    </div>
+                    <div id="click-effects" class="click-effects"></div>
+                </div>
+                
+                <div class="evolution-stats">
+                    <div class="stat">
+                        <span>Всего эволюций:</span>
+                        <span id="total-clicks">0</span>
+                    </div>
+                    <div class="stat">
+                        <span>CPS:</span>
+                        <span id="clicks-per-second">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Боковая панель -->
+            <aside class="sidebar">
+                <!-- Органеллы -->
+                <div class="panel organelles-panel">
+                    <h3>🔬 Органеллы</h3>
+                    <div id="organelles-list" class="upgrades-list">
+                        <!-- Органеллы будут загружены динамически -->
+                    </div>
+                </div>
+
+                <!-- Эры -->
+                <div class="panel eras-panel">
+                    <h3>🌍 Эры эволюции</h3>
+                    <div id="eras-list" class="eras-list">
+                        <!-- Эры будут загружены динамически -->
+                    </div>
+                </div>
+
+                <!-- NFT Организмы -->
+                <div class="panel nfts-panel">
+                    <h3>🧬 Организмы NFT</h3>
+                    <div class="nft-actions">
+                        <button id="mutate-btn" class="action-btn mutate-btn">
+                            🧪 Мутация (1000 ДНК)
+                        </button>
+                        <button id="breed-btn" class="action-btn breed-btn" disabled>
+                            🔬 Скрещивание (5000 ДНК)
+                        </button>
+                    </div>
+                    <div id="organisms-list" class="organisms-list">
+                        <!-- NFT организмы будут загружены динамически -->
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Нижняя панель -->
+        <footer class="game-footer">
+            <div class="footer-section">
+                <button id="exchange-btn" class="footer-btn exchange-btn">
+                    💰 Обменять ДНК на $DNA
+                </button>
+                <button id="leaderboard-btn" class="footer-btn leaderboard-btn">
+                    🏆 Лидерборд
+                </button>
+                <button id="achievements-btn" class="footer-btn achievements-btn">
+                    🎖️ Достижения
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="mutation-modal" class="modal">
+        <div class="modal-content">
+            <h3>🧪 Новая мутация!</h3>
+            <div id="new-organism" class="organism-card">
+                <!-- Информация о новом организме -->
+            </div>
+            <button class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="breeding-modal" class="modal">
+        <div class="modal-content">
+            <h3>🔬 Скрещивание организмов</h3>
+            <div class="breeding-selection">
+                <div class="parent-selection">
+                    <h4>Выберите родителей:</h4>
+                    <div id="breeding-organisms" class="breeding-organisms">
+                        <!-- Список организмов для скрещивания -->
+                    </div>
+                </div>
+                <button id="confirm-breeding" class="action-btn" disabled>
+                    Скрестить (5000 ДНК)
+                </button>
+            </div>
+            <button class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="exchange-modal" class="modal">
+        <div class="modal-content">
+            <h3>💰 Обмен ДНК на $DNA токены</h3>
+            <div class="exchange-form">
+                <div class="exchange-rate">
+                    Курс: 100 ДНК = 1 $DNA токен
+                </div>
+                <input type="number" id="dna-amount" placeholder="Количество ДНК" min="100" step="100">
+                <div class="exchange-preview">
+                    Получите: <span id="tokens-preview">0</span> $DNA
+                </div>
+                <button id="confirm-exchange" class="action-btn">
+                    Обменять
+                </button>
+            </div>
+            <button class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="leaderboard-modal" class="modal">
+        <div class="modal-content leaderboard-content">
+            <h3>🏆 Лидерборд</h3>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="clicks">По эволюциям</button>
+                <button class="tab-btn" data-tab="level">По уровню</button>
+                <button class="tab-btn" data-tab="nfts">По NFT</button>
+            </div>
+            <div id="leaderboard-content" class="leaderboard-list">
+                <!-- Лидерборд будет загружен динамически -->
+            </div>
+            <button class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="achievements-modal" class="modal">
+        <div class="modal-content">
+            <h3>🎖️ Достижения</h3>
+            <div id="achievements-list" class="achievements-list">
+                <!-- Достижения будут загружены динамически -->
+            </div>
+            <button class="modal-close">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notifications" class="notifications">
+        <!-- Уведомления будут появляться здесь -->
+    </div>
+
+    <!-- Загрузочный экран -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="dna-helix">
+                <div class="helix-strand"></div>
+                <div class="helix-strand"></div>
+            </div>
+            <h2>🧬 Загрузка эволюции...</h2>
+            <div class="loading-progress">
+                <div id="loading-bar" class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html> 
